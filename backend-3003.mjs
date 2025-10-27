@@ -73,10 +73,10 @@ app.get('/api/trading/performance', (req, res) => {
 
 const PORT = 3003;
 app.listen(PORT, () => {
-  console.log(\`íº€ AINEON Backend API running on http://localhost:\${PORT}\`);
+  console.log(\`íº€ AINEON Backend API running on http://0.0.0.0:\${PORT}\`);
   console.log(\`í³¡ Endpoints available:\`);
-  console.log(\`   http://localhost:\${PORT}/api/health\`);
-  console.log(\`   http://localhost:\${PORT}/api/engine/status\`);
-  console.log(\`   http://localhost:\${PORT}/api/modules/status\`);
-  console.log(\`   http://localhost:\${PORT}/api/blockchain/status\`);
+  console.log(\`   http://0.0.0.0:\${PORT}/api/health\`);
+  console.log(\`   http://0.0.0.0:\${PORT}/api/engine/status\`);
+  console.log(\`   http://0.0.0.0:\${PORT}/api/modules/status\`);
+  console.log(\`   http://0.0.0.0:\${PORT}/api/blockchain/status\`);
 });
