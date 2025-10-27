@@ -71,7 +71,7 @@ app.get('/api/trading/performance', (req, res) => {
   });
 });
 
-const PORT = 3003;
+const PORT = process.env.PORT || 3003;
 app.listen(PORT, () => {
   console.log(\`íº€ AINEON Backend API running on http://0.0.0.0:\${PORT}\`);
   console.log(\`í³¡ Endpoints available:\`);
