@@ -4,13 +4,12 @@
   "description": "AINEON Arbitrage Flash Loan Unified Dashboard",
   "type": "module",
   "scripts": {
-    "start": "node backend-3003.mjs",
+    "start": "node server.js",
     "dev": "node server.js",
     "docker:build": "docker-compose build",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "docker:logs": "docker-compose logs -f",
-    "build": "echo Build complete"
+    "docker:logs": "docker-compose logs -f"
   },
   "dependencies": {
     "express": "^4.18.0",
