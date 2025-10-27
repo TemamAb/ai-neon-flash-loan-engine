@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # UNIFIED BACKEND API
+  aineon-backend:
+    build: .
+    container_name: aineon-unified-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # API GATEWAY
+  aineon-gateway:
+    build: .
+    container_name: aineon-unified-gateway
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+    command: ["node", "server.js"]
+    restart: unless-stopped
+    depends_on:
+      - aineon-backend
+
+  # FRONTEND DASHBOARD
+  aineon-frontend:
+    build: .
+    container_name: aineon-unified-frontend
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - PORT=4000
+    command: ["node", "server.js"]
+    restart: unless-stopped
+    depends_on:
+      - aineon-backend

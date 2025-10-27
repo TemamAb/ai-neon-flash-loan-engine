@@ -1,0 +1,29 @@
+{
+  "positionLimits": {
+    "maxSinglePosition": 500000,
+    "maxDailyVolume": 5000000,
+    "maxConcurrentLoans": 10,
+    "minProfitThreshold": 1000
+  },
+  "slippageControls": {
+    "maxSlippage": 0.005,
+    "autoAdjustSlippage": true,
+    "volatilityMultiplier": 1.5
+  },
+  "riskScores": {
+    "minScore": 7.0,
+    "autoRejectBelow": 5.0,
+    "highPriorityThreshold": 8.5
+  },
+  "circuitBreakers": {
+    "maxDailyLoss": 50000,
+    "maxDrawdown": 0.15,
+    "autoStopEnabled": true,
+    "cooldownPeriod": 300
+  },
+  "gasSettings": {
+    "maxGasPrice": 150,
+    "priorityFeeMultiplier": 1.2,
+    "eip1559Enabled": true
+  }
+}

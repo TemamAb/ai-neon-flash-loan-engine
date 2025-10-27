@@ -1,0 +1,29 @@
+{
+  "name": "aineon-unified-dashboard",
+  "version": "2.0.0",
+  "description": "AINEON Arbitrage Flash Loan Unified Dashboard",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f"
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "cors": "^2.8.5",
+    "axios": "^1.0.0"
+  },
+  "keywords": [
+    "arbitrage",
+    "flash-loan",
+    "defi",
+    "trading",
+    "ai",
+    "blockchain"
+  ],
+  "author": "AINEON Team",
+  "license": "MIT"
+}

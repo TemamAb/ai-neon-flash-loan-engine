@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>íº€ AINEON Data Injector</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #0f0f0f; color: #00ff00; }
+        .bookmarklet { background: #1a1a1a; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        a { color: #00ffff; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>íº€ AINEON Real Data Injector</h1>
+    <p>Drag this link to your bookmarks bar, then click it when on the dashboard:</p>
+    
+    <div class="bookmarklet">
+        <a href="javascript:(function(){var s=document.createElement('script');s.src='http://localhost:8888/automated-injection.js';document.body.appendChild(s);})();">
+            í´¥ INJECT REAL ARBITRAGE DATA
+        </a>
+    </div>
+    
+    <p>Or run this in browser console:</p>
+    <code style="background: #000; padding: 10px; display: block;">
+        fetch('http://localhost:8888/automated-injection.js').then(r=>r.text()).then(script=>eval(script))
+    </code>
+</body>
+</html>

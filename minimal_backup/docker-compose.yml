@@ -1,0 +1,20 @@
+services:
+  main-api:
+    build: .
+    container_name: aineon-api-main
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    restart: unless-stopped
+
+  main-dashboard:
+    build: .
+    container_name: aineon-dashboard-ui
+    ports:
+      - "8080:4000"  # Changed from 4000 to 8080
+    command: ["node", "frontend-server.js"]
+    depends_on:
+      - main-api
+    restart: unless-stopped

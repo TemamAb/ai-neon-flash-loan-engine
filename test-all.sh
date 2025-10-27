@@ -1,0 +1,12 @@
+#!/bin/bash
+echo "íº€ STARTING MASTER DASHBOARD TESTS..."
+curl http://localhost:3000/ && echo -e "\n---"
+curl http://localhost:3000/health && echo -e "\n---" 
+curl http://localhost:3000/api/metrics && echo -e "\n---"
+curl -X POST http://localhost:3000/api/ai/autonomy/enable -H "Content-Type: application/json" -d '{"mode":"AUTONOMOUS"}' && echo -e "\n---"
+curl -X POST http://localhost:3000/api/ai/optimize/parameters && echo -e "\n---"
+curl -X POST http://localhost:3000/api/deployment/live && echo -e "\n---"
+curl -X POST http://localhost:3000/api/system/emergency-stop && echo -e "\n---"
+curl -X POST http://localhost:3000/api/system/restart && echo -e "\n---"
+curl http://localhost:3000/health && echo -e "\n---"
+echo "âœ… ALL TESTS COMPLETED!"
