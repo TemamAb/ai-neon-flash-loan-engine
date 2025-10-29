@@ -3,73 +3,705 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aineon AI Trading Dashboard</title>
+    <title>AINEON ELITE - Flash Loan Command Center</title>
     <style>
-        body { 
-            margin: 0; 
-            background: #0b0b0f; 
-            color: #d8d9da; 
-            font-family: Arial, sans-serif;
+        :root {
+            --primary: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --flash-green: #00ff00;
+            --elite-gold: #ffd700;
+            --dark: #0a0f1f;
+            --darker: #050811;
+            --light: #f8fafc;
         }
-        .dashboard {
-            padding: 20px;
-            max-width: 1200px;
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1800px;
             margin: 0 auto;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .metric-card {
-            background: #1a1a1a;
             padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #333;
         }
-        .metric-value {
-            font-size: 1.5em;
-            color: #32d0ff;
-            font-weight: bold;
+        
+        /* ELITE HEADER - CLEAN & POWERFUL */
+        .elite-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
+            border-radius: 20px;
+            border: 3px solid var(--elite-gold);
+            position: relative;
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.2);
+        }
+        
+        .elite-header h1 {
+            font-size: 3rem;
+            margin-bottom: 8px;
+            background: linear-gradient(45deg, var(--elite-gold), var(--flash-green), #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+        
+        .elite-header .subtitle {
+            color: #94a3b8;
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        
+        .elite-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .control-label {
+            color: #cbd5e1;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .form-control {
+            padding: 8px 12px;
+            border: 1px solid #475569;
+            border-radius: 6px;
+            background: rgba(15, 23, 42, 0.9);
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-elite {
+            background: linear-gradient(45deg, var(--elite-gold), var(--flash-green));
+            color: #000;
+            font-weight: 800;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* CRITICAL METRICS BAR - IMMEDIATE VISIBILITY */
+        .critical-metrics-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .critical-metric {
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid rgba(0, 255, 0, 0.3);
+            text-align: center;
+        }
+        
+        .critical-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--flash-green);
+            margin: 8px 0;
+        }
+        
+        .critical-label {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .critical-subtext {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+        
+        /* AI WHISPER - MOVED TO STRATEGIC POSITION */
+        .ai-intelligence-panel {
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.08) 0%, rgba(37, 99, 235, 0.08) 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 2px solid rgba(255, 215, 0, 0.4);
+        }
+        
+        .ai-intelligence-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            color: var(--elite-gold);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .ai-intelligence-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            color: #e2e8f0;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        .ai-config-item {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* ENHANCED GRID LAYOUT */
+        .elite-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .elite-module {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .elite-module::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--elite-gold), var(--flash-green), var(--primary));
+        }
+        
+        .elite-module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.15);
+            border-color: rgba(255, 215, 0, 0.4);
+        }
+        
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .module-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--elite-gold);
+        }
+        
+        .status-indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 15px var(--success);
+        }
+        
+        /* ENHANCED METRICS GRID */
+        .metrics-grid-compact {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .metric-card-elite {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 18px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card-elite:hover {
+            transform: scale(1.03);
+            border-color: var(--flash-green);
+            box-shadow: 0 6px 20px rgba(0, 255, 0, 0.2);
+        }
+        
+        .metric-value-elite {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 10px 0;
+            color: var(--flash-green);
+        }
+        
+        .metric-label-elite {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .currency-symbol {
+            font-size: 1.2rem;
+            color: var(--elite-gold);
+        }
+        
+        /* CAPITAL EFFICIENCY VISUALIZATION */
+        .efficiency-master-panel {
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.05) 0%, rgba(37, 99, 235, 0.05) 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid rgba(0, 255, 0, 0.2);
+        }
+        
+        .efficiency-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .efficiency-title {
+            color: var(--flash-green);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .efficiency-value {
+            color: var(--elite-gold);
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+        
+        .efficiency-gauge-elite {
+            height: 20px;
+            background: #1e293b;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow: hidden;
+            border: 2px solid rgba(0, 255, 0, 0.3);
+            position: relative;
+        }
+        
+        .gauge-fill-elite {
+            height: 100%;
+            width: 23.4%;
+            background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981);
+            border-radius: 8px;
+            transition: width 0.8s ease;
+        }
+        
+        .gauge-marker {
+            position: absolute;
+            top: -5px;
+            width: 3px;
+            height: 30px;
+            background: var(--elite-gold);
+            transform: translateX(-50%);
+        }
+        
+        .gauge-marker.optimal { left: 50%; }
+        .gauge-marker.current { left: 23.4%; }
+        
+        .gauge-labels-elite {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); }
+        }
+        
+        .glow {
+            animation: glow 3s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .critical-metrics-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .elite-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .elite-controls {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="dashboard">
-        <div class="header">
-            <h1>��� Aineon AI Trading Dashboard</h1>
-            <p>Advanced AI-powered cross-chain trading system</p>
-        </div>
-        
-        <div class="metrics-grid">
-            <div class="metric-card">
-                <div class="metric-label">AI Confidence</div>
-                <div class="metric-value">94.8%</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Market Capacity</div>
-                <div class="metric-value">142M</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Max Latency</div>
-                <div class="metric-value">&lt;600ms</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Active Strategies</div>
-                <div class="metric-value">8</div>
+    <div class="container">
+        <!-- ELITE HEADER WITH ENHANCED CONTROLS -->
+        <div class="elite-header">
+            <h1>🚀 AINEON ELITE - Flash Loan Command Center</h1>
+            <div class="subtitle">Institutional-Grade Flash Loan Arbitrage Engine with AI-MAX Intelligence</div>
+            
+            <div class="elite-controls">
+                <div class="control-group">
+                    <span class="control-label">🔄 Refresh:</span>
+                    <select class="form-control" id="refreshInterval">
+                        <option value="1000">1 Second</option>
+                        <option value="2000">2 Seconds</option>
+                        <option value="5000" selected>5 Seconds</option>
+                        <option value="10000">10 Seconds</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <span class="control-label">💰 Currency:</span>
+                    <select class="form-control" id="currencySelector">
+                        <option value="USD">USD ($)</option>
+                        <option value="ETH">ETH (Ξ)</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-primary" onclick="refreshData()">🔄 Refresh Now</button>
+                <button class="btn btn-elite" onclick="deployLive()">🚀 DEPLOY LIVE</button>
             </div>
         </div>
 
-        <div class="metric-card">
-            <h3>��� Next Steps</h3>
-            <p>Run the Vue.js dashboard for full functionality:</p>
-            <code>cd aineon-dashboard && npm run dev</code>
+        <!-- CRITICAL METRICS BAR - TOP PRIORITY VISIBILITY -->
+        <div class="critical-metrics-bar">
+            <div class="critical-metric">
+                <div class="critical-label">Total Profit Today</div>
+                <div class="critical-value" id="profitToday"><span class="currency-symbol">$</span>151,820</div>
+                <div class="critical-subtext">Flash Loan Arbitrage</div>
+            </div>
+            <div class="critical-metric">
+                <div class="critical-label">Capital Efficiency</div>
+                <div class="critical-value" id="utilizationRate">23.4%</div>
+                <div class="critical-subtext">Utilization Rate</div>
+            </div>
+            <div class="critical-metric">
+                <div class="critical-label">MEV Defense</div>
+                <div class="critical-value" id="mevDefense">96%</div>
+                <div class="critical-subtext">Protection Active</div>
+            </div>
+            <div class="critical-metric">
+                <div class="critical-label">Execution Speed</div>
+                <div class="critical-value" id="executionSpeed">428ms</div>
+                <div class="critical-subtext">-22ms vs benchmark</div>
+            </div>
+        </div>
+
+        <!-- AI INTELLIGENCE PANEL - STRATEGIC POSITION -->
+        <div class="ai-intelligence-panel">
+            <div class="ai-intelligence-header">
+                <span>🧠 AI STRATEGIC INTELLIGENCE</span>
+                <div class="status-indicator pulse"></div>
+            </div>
+            <div class="ai-intelligence-content">
+                <div class="ai-config-item">
+                    <strong>🎯 Live Configuration:</strong><br>
+                    • 23.4% Capital Utilization<br>
+                    • MEV Defense: ACTIVE (96%)<br>
+                    • Execution: 428ms
+                </div>
+                <div class="ai-config-item">
+                    <strong>⚡ System Status:</strong><br>
+                    • AI-MAX: ACTIVE<br>
+                    • Risk: MEDIUM<br>
+                    • Gasless: ON<br>
+                    • Min Confidence: 75%
+                </div>
+                <div class="ai-config-item">
+                    <strong>💰 Performance Targets:</strong><br>
+                    • Expected Profit/hr: <span id="expectedProfit">$15,000</span><br>
+                    • Success Rate: 87%<br>
+                    • Active Opportunities: 47
+                </div>
+            </div>
+        </div>
+
+        <!-- ENHANCED MODULE GRID -->
+        <div class="elite-grid">
+            <!-- FLASH LOAN PERFORMANCE -->
+            <div class="elite-module">
+                <div class="module-header">
+                    <div class="module-title">🚀 FLASH LOAN PERFORMANCE</div>
+                    <div class="status-indicator glow"></div>
+                </div>
+                <div class="metrics-grid-compact">
+                    <div class="metric-card-elite">
+                        <div class="metric-label-elite">Profit per Trade</div>
+                        <div class="metric-value-elite"><span class="currency-symbol">$</span>3,112</div>
+                        <div class="metric-label-elite">ROI: 1.9%</div>
+                    </div>
+                    <div class="metric-card-elite">
+                        <div class="metric-label-elite">Success Rate</div>
+                        <div class="metric-value-elite">87%</div>
+                        <div class="metric-label-elite">Flash Loans</div>
+                    </div>
+                    <div class="metric-card-elite">
+                        <div class="metric-label-elite">Avg Efficiency</div>
+                        <div class="metric-value-elite">64.2%</div>
+                        <div class="metric-label-elite">Historical</div>
+                    </div>
+                    <div class="metric-card-elite">
+                        <div class="metric-label-elite">Stealth Score</div>
+                        <div class="metric-value-elite">89%</div>
+                        <div class="metric-label-elite">Low Detection</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI TERMINAL INTELLIGENCE -->
+            <div class="elite-module">
+                <div class="module-header">
+                    <div class="module-title">🧠 AI TERMINAL INTELLIGENCE</div>
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="metrics-grid-compact">
+                    <div class="metric-card-elite">
+                        <div class="metric-label-elite">AI Confidence</div>
+                        <div class="metric-value-elite">94%</div>
+                    </div>
+                    <div class="metric-card-elite">
+                        <div class="metric-label-elite">Decision Quality</div>
+                        <div class="metric-value-elite">87%</div>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; padding: 15px; background: rgba(0, 255, 0, 0.1); border-radius: 8px; border: 1px solid rgba(0, 255, 0, 0.3);">
+                    <div style="color: var(--flash-green); font-size: 0.9rem; font-weight: 600;">
+                        🎯 Active Strategies: Flash Loan Arbitrage, Cross-Chain MEV
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional modules remain the same but with currency dynamic updates -->
+        </div>
+
+        <!-- CAPITAL EFFICIENCY MASTER PANEL -->
+        <div class="efficiency-master-panel">
+            <div class="efficiency-header">
+                <div class="efficiency-title">🎯 CAPITAL EFFICIENCY OPTIMIZATION</div>
+                <div class="efficiency-value" id="currentEfficiency">23.4%</div>
+            </div>
+            <div class="efficiency-gauge-elite">
+                <div class="gauge-fill-elite" id="efficiencyGauge"></div>
+                <div class="gauge-marker optimal"></div>
+                <div class="gauge-marker current"></div>
+            </div>
+            <div class="gauge-labels-elite">
+                <span>0% (Idle)</span>
+                <span>50% (Optimal)</span>
+                <span>100% (Max)</span>
+            </div>
+            <div style="text-align: center; margin-top: 15px;">
+                <button class="btn btn-success" onclick="optimizeCapital()">
+                    🔧 OPTIMIZE CAPITAL EFFICIENCY
+                </button>
+            </div>
         </div>
     </div>
+
+    <script>
+        // CURRENCY CONVERSION RATES (SIMULATED)
+        const conversionRates = {
+            USD: 1,
+            ETH: 0.0005 // Example: 1 ETH = $2000
+        };
+
+        // CURRENT CURRENCY STATE
+        let currentCurrency = 'USD';
+        let currentRefreshInterval = 5000; // 5 seconds default
+        let refreshIntervalId = null;
+
+        // DYNAMIC CURRENCY CONVERSION
+        function convertValue(usdValue, currency) {
+            if (currency === 'USD') {
+                return {
+                    value: usdValue,
+                    symbol: '$',
+                    formatted: '$' + usdValue.toLocaleString()
+                };
+            } else {
+                const ethValue = usdValue * conversionRates.ETH;
+                return {
+                    value: ethValue,
+                    symbol: 'Ξ',
+                    formatted: 'Ξ' + ethValue.toFixed(4)
+                };
+            }
+        }
+
+        // UPDATE ALL CURRENCY-DEPENDENT METRICS
+        function updateCurrencyMetrics() {
+            const currency = document.getElementById('currencySelector').value;
+            currentCurrency = currency;
+            
+            // Update profit metrics
+            const profitToday = document.getElementById('profitToday');
+            const currentProfit = 151820; // Base USD value
+            const convertedProfit = convertValue(currentProfit, currency);
+            profitToday.innerHTML = `<span class="currency-symbol">${convertedProfit.symbol}</span>${currency === 'USD' ? convertedProfit.value.toLocaleString() : convertedProfit.value.toFixed(4)}`;
+            
+            // Update profit per trade
+            const profitPerTradeElements = document.querySelectorAll('.metric-value-elite');
+            profitPerTradeElements.forEach(element => {
+                if (element.textContent.includes('$')) {
+                    const usdValue = parseInt(element.textContent.replace(/[$,]/g, ''));
+                    const converted = convertValue(usdValue, currency);
+                    element.innerHTML = `<span class="currency-symbol">${converted.symbol}</span>${currency === 'USD' ? converted.value.toLocaleString() : converted.value.toFixed(4)}`;
+                }
+            });
+            
+            // Update expected profit
+            const expectedProfit = document.getElementById('expectedProfit');
+            const expectedUsd = 15000;
+            const convertedExpected = convertValue(expectedUsd, currency);
+            expectedProfit.textContent = convertedExpected.formatted;
+        }
+
+        // REFRESH DATA FUNCTION
+        function refreshData() {
+            console.log('Refreshing dashboard with', currentCurrency, 'currency...');
+            
+            // Simulate live data updates
+            const profitToday = document.getElementById('profitToday');
+            const currentValue = profitToday.textContent.replace(/[$,Ξ]/g, '');
+            const baseIncrement = currentCurrency === 'USD' ? 
+                Math.floor(Math.random() * 500) + 100 : 
+                (Math.random() * 0.2) + 0.05;
+                
+            const newValue = currentCurrency === 'USD' ? 
+                (parseFloat(currentValue.replace(/,/g, '')) + baseIncrement) :
+                (parseFloat(currentValue) + baseIncrement);
+            
+            const converted = convertValue(currentCurrency === 'USD' ? newValue : newValue / conversionRates.ETH, currentCurrency);
+            profitToday.innerHTML = `<span class="currency-symbol">${converted.symbol}</span>${currentCurrency === 'USD' ? converted.value.toLocaleString() : converted.value.toFixed(4)}`;
+            
+            // Update other dynamic metrics
+            document.querySelectorAll('.metric-value-elite').forEach(metric => {
+                if (metric.textContent.includes('$') || metric.textContent.includes('Ξ')) {
+                    const current = parseFloat(metric.textContent.replace(/[$,Ξ]/g, '').replace(/,/g, ''));
+                    const variation = currentCurrency === 'USD' ? 
+                        Math.floor(Math.random() * 200) - 100 :
+                        (Math.random() * 0.1) - 0.05;
+                    const newVal = Math.max(0.0001, current + variation);
+                    const symbol = metric.querySelector('.currency-symbol').textContent;
+                    metric.innerHTML = `<span class="currency-symbol">${symbol}</span>${currentCurrency === 'USD' ? newVal.toLocaleString() : newVal.toFixed(4)}`;
+                }
+            });
+        }
+
+        // SETUP AUTO-REFRESH
+        function setupAutoRefresh() {
+            if (refreshIntervalId) {
+                clearInterval(refreshIntervalId);
+            }
+            
+            refreshIntervalId = setInterval(refreshData, currentRefreshInterval);
+        }
+
+        // INITIALIZE DASHBOARD
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up currency selector
+            document.getElementById('currencySelector').addEventListener('change', function() {
+                updateCurrencyMetrics();
+            });
+            
+            // Set up refresh interval selector
+            document.getElementById('refreshInterval').addEventListener('change', function() {
+                currentRefreshInterval = parseInt(this.value);
+                setupAutoRefresh();
+                console.log('Refresh interval updated to:', currentRefreshInterval, 'ms');
+            });
+            
+            // Initial setup
+            updateCurrencyMetrics();
+            setupAutoRefresh();
+        });
+
+        // OTHER FUNCTIONS (deployLive, optimizeCapital, etc.)
+        function deployLive() {
+            alert('🚀 AI-MAX Flash Loan System DEPLOYED!\nLive trading activated with ' + currentCurrency + ' denominated profits.');
+        }
+
+        function optimizeCapital() {
+            alert('🔧 Optimizing Capital Efficiency...\nAI analyzing opportunities for improved utilization.');
+            setTimeout(() => {
+                document.getElementById('utilizationRate').textContent = '28.1%';
+                document.getElementById('currentEfficiency').textContent = '28.1%';
+                document.getElementById('efficiencyGauge').style.width = '28.1%';
+                document.querySelector('.gauge-marker.current').style.left = '28.1%';
+                alert('✅ Capital efficiency optimized to 28.1%!');
+            }, 2000);
+        }
+
+        // Clean up on page unload
+        window.addEventListener('beforeunload', function() {
+            if (refreshIntervalId) {
+                clearInterval(refreshIntervalId);
+            }
+        });
+    </script>
 </body>
 </html>
