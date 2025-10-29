@@ -1,0 +1,10 @@
+#!/bin/bash
+echo "AINEON VPS Deployment Options:"
+echo "==============================="
+echo "1. DigitalOcean: 5/month droplet"
+echo "2. AWS EC2: ~10/month" 
+echo "3. Vultr: 6/month"
+echo "4. Linode: 5/month"
+echo ""
+echo "Recommended: DigitalOcean 5/month"
+echo "Deployment command: pm2 start backend-3003.mjs"
