@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AINEON AI Trading Command Center</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --darker: #0f172a;
+            --light: #f8fafc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #60a5fa, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header .subtitle {
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+        
+        .control-panel {
+            background: rgba(30, 41, 59, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .panel-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .module {
+            background: rgba(30, 41, 59, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+        
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .module-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .metric-card {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .metric-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        .ai-whisper {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(16, 185, 129, 0.2));
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .ai-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .ai-content {
+            line-height: 1.6;
+            color: #e2e8f0;
+        }
+        
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .control-group {
+            background: rgba(30, 41, 59, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .control-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider-round {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #475569;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider-round:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider-round {
+            background-color: var(--success);
+        }
+        
+        input:checked + .slider-round:before {
+            transform: translateX(26px);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #475569;
+            border-radius: 6px;
+            background: rgba(15, 23, 42, 0.8);
+            color: white;
+            font-size: 14px;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+        
+        select.form-control {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>��� AINEON AI Trading Command Center</h1>
+            <div class="subtitle">Institutional-Grade Flash Loan Arbitrage Engine</div>
+        </div>
+
+        <div class="ai-whisper">
+            <div class="ai-title">
+                <span>AI WHISPER - Live Intelligence</span>
+                <div class="status-indicator pulse"></div>
+            </div>
+            <div class="ai-content" id="aiWhisperContent">
+                 Config: MEDIUM risk | AI-MAX enabled | Gasless ON | Multi-chain ON
+                Expected Profit/hr: $15,000 | Min Confidence: 75%
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Total Profit Today</div>
+                <div class="metric-value" id="profitToday">$147,382</div>
+                <div class="metric-label">Today</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Profit Last Hour</div>
+                <div class="metric-value" id="profitHour">$18,293</div>
+                <div class="metric-label">Last 60 minutes</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">AI Confidence</div>
+                <div class="metric-value" id="aiConfidence">94%</div>
+                <div class="metric-label">Current model confidence</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Active Opportunities</div>
+                <div class="metric-value" id="activeOps">47</div>
+                <div class="metric-label">Current total across blockchain</div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <div class="panel-header">
+                <div class="panel-title">⚙️ AI-MAX CONFIGURATION</div>
+                <div>
+                    <button class="btn btn-primary" onclick="connectWallet()">Connect Wallet</button>
+                    <button class="btn btn-success" onclick="deployLive()">DEPLOY LIVE</button>
+                </div>
+            </div>
+            
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label class="control-label">Profit Target (per hour)</label>
+                    <input type="number" class="form-control" value="10000" id="profitTarget">
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Risk Level</label>
+                    <select class="form-control" id="riskLevel" onchange="updateRiskParameters()">
+                        <option value="LOW"> LOW RISK - Conservative</option>
+                        <option value="MEDIUM" selected> MEDIUM RISK - Balanced</option>
+                        <option value="HIGH"> HIGH RISK - Aggressive</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">⚡ AI-MAX Mode (Full Autonomy)</label>
+                    <label class="switch">
+                        <input type="checkbox" checked id="aiMaxMode">
+                        <span class="slider-round"></span>
+                    </label>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Gasless Mode (Relayer)</label>
+                    <label class="switch">
+                        <input type="checkbox" checked id="gaslessMode">
+                        <span class="slider-round"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="module">
+                <div class="module-header">
+                    <div class="module-title">AI TERMINAL INTELLIGENCE</div>
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">AI Terminal Accuracy</div>
+                        <div class="metric-value">94%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Decision Quality</div>
+                        <div class="metric-value">87%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module">
+                <div class="module-header">
+                    <div class="module-title"> LIVE BOT MONITORING</div>
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Active Bots</div>
+                        <div class="metric-value">5</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Success Rate</div>
+                        <div class="metric-value">87%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module">
+                <div class="module-header">
+                    <div class="module-title"> PROFIT MANAGEMENT</div>
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Total Accumulated</div>
+                        <div class="metric-value">$147K</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Reinvested</div>
+                        <div class="metric-value">$118K</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module">
+                <div class="module-header">
+                    <div class="module-title"> STRATEGY OPTIMIZATION</div>
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Optimization Score</div>
+                        <div class="metric-value">89%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Learning Progress</div>
+                        <div class="metric-value">76%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module">
+                <div class="module-header">
+                    <div class="module-title"> SECURITY & RISK AI</div>
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Risk Exposure</div>
+                        <div class="metric-value">15%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Security Threats</div>
+                        <div class="metric-value">0</div>
+                    </div>
+                </div>
+                <button class="btn btn-danger" style="margin-top: 15px; width: 100%;" onclick="emergencyStop()">
+                     EMERGENCY STOP
+                </button>
+            </div>
+
+            <div class="module">
+                <div class="module-header">
+                    <div class="module-title"> PERFORMANCE & HEALTH</div>
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">System Health</div>
+                        <div class="metric-value">100%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Uptime</div>
+                        <div class="metric-value">99.9%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module">
+                <div class="module-header">
+                    <div class="module-title"> WALLET SECURITY</div>
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Wallet Balance</div>
+                        <div class="metric-value">$2.4M</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Transactions</div>
+                        <div class="metric-value">23</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module">
+                <div class="module-header">
+                    <div class="module-title"> STRATEGY CONTROL PANEL</div>
+                    <div class="status-indicator"></div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <div style="margin-bottom: 10px;">
+                        <label class="control-label">Flash Loan Arbitrage</label>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider-round"></span>
+                        </label>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label class="control-label">Cross-Chain MEV</label>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider-round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <div class="panel-header">
+                <div class="panel-title">AUTO-CALCULATED RISK PARAMETERS</div>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Max Position Size</div>
+                    <div class="metric-value" id="maxPosition">$500K</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Stop Loss Threshold</div>
+                    <div class="metric-value" id="stopLoss">-5%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Daily Loss Limit</div>
+                    <div class="metric-value" id="dailyLoss">$50K</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Leverage Multiplier</div>
+                    <div class="metric-value" id="leverage">3×</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const riskPresets = {
+            LOW: {
+                expectedProfit: 5000,
+                maxPosition: 100000,
+                stopLoss: -0.02,
+                dailyLoss: 10000,
+                leverage: 1
+            },
+            MEDIUM: {
+                expectedProfit: 15000,
+                maxPosition: 500000,
+                stopLoss: -0.05,
+                dailyLoss: 50000,
+                leverage: 3
+            },
+            HIGH: {
+                expectedProfit: 50000,
+                maxPosition: 2000000,
+                stopLoss: -0.10,
+                dailyLoss: 200000,
+                leverage: 10
+            }
+        };
+
+        function updateRiskParameters() {
+            const riskLevel = document.getElementById('riskLevel').value;
+            const preset = riskPresets[riskLevel];
+            
+            document.getElementById('maxPosition').textContent = '$' + preset.maxPosition.toLocaleString();
+            document.getElementById('stopLoss').textContent = (preset.stopLoss * 100) + '%';
+            document.getElementById('dailyLoss').textContent = '$' + preset.dailyLoss.toLocaleString();
+            document.getElementById('leverage').textContent = preset.leverage + '×';
+            
+            updateAIWhisper();
+        }
+
+        function updateAIWhisper() {
+            const riskLevel = document.getElementById('riskLevel').value;
+            const aiMax = document.getElementById('aiMaxMode').checked ? 'AI-MAX enabled' : 'AI-COPILOT';
+            const gasless = document.getElementById('gaslessMode').checked ? 'ON' : 'OFF';
+            const preset = riskPresets[riskLevel];
+            
+            const whisper = `��� Config: ${riskLevel} risk | ${aiMax} | Gasless ${gasless} | Multi-chain ON\nExpected Profit/hr: $${preset.expectedProfit.toLocaleString()} | Min Confidence: 75%`;
+            document.getElementById('aiWhisperContent').textContent = whisper;
+        }
+
+        function connectWallet() {
+            alert('Wallet connection requested - would integrate with MetaMask/Web3 in production');
+        }
+
+        function deployLive() {
+            alert(' AI-MAX Deployment Initiated!\nAll systems going live...');
+        }
+
+        function emergencyStop() {
+            if (confirm(' ARE YOU SURE?\nThis will immediately halt all trading activity!')) {
+                alert('EMERGENCY STOP ACTIVATED! All trading halted.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateRiskParameters();
+            
+            setInterval(() => {
+                const profitToday = document.getElementById('profitToday');
+                const currentProfit = parseInt(profitToday.textContent.replace(/[$,]/g, ''));
+                profitToday.textContent = '$' + (currentProfit + Math.floor(Math.random() * 1000)).toLocaleString();
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
