@@ -2,7 +2,7 @@
 pragma solidity ^0.8.19;
 
 contract ExecutionBot {
-    function executeFlashLoanArbitrage() external pure returns (uint256) {
-        return 250000 * 10**18; // $250K profit
+    function executeTrade(uint256 amount) external pure returns (uint256) {
+        return (amount * 25) / 10000; // 0.25% profit
     }
 }

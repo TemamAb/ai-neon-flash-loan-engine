@@ -6,13 +6,20 @@ contract BotOrchestrator {
     address public executionBot;
     address public riskBot;
     
-    function setBots(address _scout, address _executor, address _risk) external {
+    event BotsOrchestrated(address scout, address executor, address risk);
+    
+    function orchestrateBots(address _scout, address _executor, address _risk) external {
         scoutBot = _scout;
         executionBot = _executor;
         riskBot = _risk;
+        emit BotsOrchestrated(_scout, _executor, _risk);
     }
     
-    function orchestrateTrade() external view returns (bool) {
-        return scoutBot != address(0) && executionBot != address(0) && riskBot != address(0);
+    function getBotStatus() external view returns (bool, bool, bool) {
+        return (
+            scoutBot != address(0),
+            executionBot != address(0),
+            riskBot != address(0)
+        );
     }
 }
