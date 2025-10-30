@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profit Auto-Withdrawal</title>
+    <style>
+        body { font-family: Arial; background: #0a0f1f; color: white; padding: 20px; }
+        .status { background: green; padding: 20px; border-radius: 10px; margin: 10px 0; }
+        .button { background: blue; color: white; padding: 15px; border: none; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>í²° PROFIT AUTO-WITHDRAWAL</h1>
+    <div class="status">
+        <h2>Current Profits: $116,137</h2>
+        <p>Auto-withdraw above: $1,000</p>
+        <button class="button" onclick="withdrawNow()">WITHDRAW NOW</button>
+    </div>
+    
+    <script>
+        function withdrawNow() {
+            alert('íº€ Withdrawing $116,137 to Boss Wallet...');
+            // In production: Connect to MetaMask and send transaction
+            console.log('Withdrawal initiated');
+        }
+        
+        // Auto-check every 5 minutes
+        setInterval(() => {
+            if (116137 > 1000) {
+                console.log('Auto-withdrawal triggered');
+                withdrawNow();
+            }
+        }, 300000);
+    </script>
+</body>
+</html>
